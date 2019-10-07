@@ -6,6 +6,7 @@ endif
 
 CXX = g++
 CXXFLAGS  = -O3
+CXXFLAGSD = -g3 -ggdb -Wall
 LDLIBS = -lz
 
 SRCDIR = src
@@ -20,28 +21,32 @@ DEPS = $(SRCS:.cpp=.d)
 
 all:	build
 
-build:	$(BINDIR) $(RLSDIR) psarc
+build:	$(BINDIR) $(addprefix $(BINDIR)/$(RLSDIR)/, $(OBJDIR)) $(addprefix $(BINDIR)/$(RLSDIR)/, psarc)
 
-debug:	RLSDIR := $(DBGDIR)
-debug:	CXXFLAGS := -g3 -ggdb -Wall
-debug:	$(BINDIR) $(DBGDIR) psarc
+debug:	$(BINDIR) $(addprefix $(BINDIR)/$(DBGDIR)/, $(OBJDIR)) $(addprefix $(BINDIR)/$(DBGDIR)/, psarc)
 
-psarc:	$(addprefix $(OBJDIR)/, $(OBJS))
-		cd $(BINDIR) && cd $(RLSDIR) && $(CXX) $(LDFLAGS) -o $@ $^ $(LDLIBS)
+$(BINDIR)/$(RLSDIR)/psarc:	$(addprefix $(BINDIR)/$(RLSDIR)/$(OBJDIR)/, $(OBJS))
+		$(CXX) $(LDFLAGS) -o $(BINDIR)/$(RLSDIR)/psarc $^ $(LDLIBS)
+
+$(BINDIR)/$(DBGDIR)/psarc:	$(addprefix $(BINDIR)/$(DBGDIR)/$(OBJDIR)/, $(OBJS))
+		$(CXX) $(LDFLAGS) -o $(BINDIR)/$(DBGDIR)/psarc $^ $(LDLIBS)
 
 $(BINDIR):
 		-mkdir $(BINDIR)
 
-$(RLSDIR): 
+$(BINDIR)/$(RLSDIR)/$(OBJDIR): 
 		-cd $(BINDIR) && mkdir $(RLSDIR) && cd $(RLSDIR) && mkdir $(OBJDIR)
 
-$(DBGDIR): 
+$(BINDIR)/$(DBGDIR)/$(OBJDIR): 
 		-cd $(BINDIR) && mkdir $(DBGDIR) && cd $(DBGDIR) && mkdir $(OBJDIR)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -MMD -c $< -o $(BINDIR)/$(RLSDIR)/$@
+$(BINDIR)/$(RLSDIR)/$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -MMD -c $< -o $@
+
+$(BINDIR)/$(DBGDIR)/$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CXX) $(CXXFLAGSD) -MMD -c $< -o $@
 
 clean:
 	$(RD) $(BINDIR)
-
+	
 -include $(addprefix $(OBJDIR)/, $(DEPS))
