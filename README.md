@@ -1,6 +1,6 @@
 # Yet Another PSARC
 
-Cross platform update of Matthieu Milan's [PSARC PS3 extractor for Linux](https://www.ferb.fr/ps3/PSARC/).  The initial commit includes minimal changes but a new command line argument was added, *-h*.  *-h* tells psarc to print header information to std out without formatting the file size, using colons as field separators, and newlines to delineate entries (id:size:path). This is useful for piping information to another program that would build a tree view of an archive(s) contents.  A complete list of changes can be found in [CHANGELOG.md](CHANGELOG.md).
+Cross platform update of Matthieu Milan's [PSARC PS3 extractor for Linux](https://www.ferb.fr/ps3/PSARC/).  The initial commit includes minimal changes but a new command line argument was added.  *-h* tells psarc to print header information to std out without formatting the file size, using colons as field separators, and newlines to delineate entries (id:size:path). This is useful for piping information to another program that would build a tree view of an archive(s) contents.  A complete list of changes can be found in [CHANGELOG.md](CHANGELOG.md).
 
 ## Getting Started
 
@@ -62,7 +62,7 @@ To This:
 
 ## Authors
 
-* **Paul Hedrick** - *Rework* - [github](https://github.com/paul-hedrick)[website](https://phedrick.dev) - not currently active
+* **Paul Hedrick** - *Rework* - [github](https://github.com/paul-hedrick) & [website](https://phedrick.dev) - not currently active
 
 ## Acknowledgments
 
