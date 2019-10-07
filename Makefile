@@ -30,7 +30,7 @@ psarc:	$(addprefix $(OBJDIR)/, $(OBJS))
 		cd $(BINDIR) && cd $(RLSDIR) && $(CXX) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 $(BINDIR):
-		-mkdir $(BINDIR) $(E)
+		-mkdir $(BINDIR)
 
 $(RLSDIR): 
 		-cd $(BINDIR) && mkdir $(RLSDIR) && cd $(RLSDIR) && mkdir $(OBJDIR)
